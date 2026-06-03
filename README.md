@@ -28,47 +28,48 @@ winget install yt-dlp
 
 ## Installation
 
-### Via npm (GitHub Packages)
+Install via npm or clone the repo.
+
+### npm
+
+Create a `.npmrc` in your NodeLink folder:
+
+```
+@freepinkg:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=seu_token_do_github
+```
+
+Then:
 
 ```bash
-# Configure npm to use GitHub Packages
-echo "@freepinkg:registry=https://npm.pkg.github.com" >> .npmrc
-echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> .npmrc
-
-# Install
 npm install @freepinkg/ytdl-node
 ```
 
-Then add to your `config.js`:
+Add to `config.js`:
 
 ```js
-plugins: [
-  {
-    name: 'ytdl-node',
-    source: 'npm',
-    package: '@freepinkg/ytdl-node'
-  }
-],
+{
+  name: 'ytdl-node',
+  source: 'npm',
+  package: '@freepinkg/ytdl-node'
+}
 ```
 
-### Via local path (git clone)
+### git clone
 
 ```bash
-cd /path/to/NodeLink
-git clone https://github.com/freepinkg/ytdl-node.git plugins/ytdl-node
-npm install
+cd plugins
+git clone https://github.com/freepinkg/ytdl-node.git
 ```
 
-Then add to your `config.js`:
+Add to `config.js`:
 
 ```js
-plugins: [
-  {
-    name: 'ytdl-node',
-    source: 'local',
-    path: 'plugins/ytdl-node'
-  }
-],
+{
+  name: 'ytdl-node',
+  source: 'local',
+  path: 'plugins/ytdl-node'
+}
 ```
 
 ## Usage
