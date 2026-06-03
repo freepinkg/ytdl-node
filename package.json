@@ -1,9 +1,16 @@
 {
-  "name": "ytdl-node",
+  "name": "@freepinkg/ytdl-node",
   "version": "1.0.0",
   "description": "yt-dlp audio source plugin for NodeLink - Resolve tracks from 1000+ sites via yt-dlp",
   "type": "module",
   "main": "index.ts",
   "author": "doyimmi",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freepinkg/ytdl-node.git"
+  }
 }
