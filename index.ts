@@ -1,8 +1,11 @@
-import { execa } from "execa";
+import { execFile } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { existsSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { promisify } from "node:util";
+
+const execFileAsync = promisify(execFile);
 
 const YTDLP_BIN = process.env.YTDLP_PATH || "yt-dlp";
 const CACHE_DIR = join(tmpdir(), "ytdl-node-cache");
@@ -47,7 +50,7 @@ export default async function (
 
   async function checkYtdlp(): Promise<boolean> {
     try {
-      const { stdout } = await execa(YTDLP_BIN, ["--version"]);
+      const { stdout } = await execFileAsync(YTDLP_BIN, ["--version"]);
       logger(`yt-dlp v${stdout.trim()} found`);
       return true;
     } catch {
@@ -187,9 +190,8 @@ export default async function (
       }
 
       try {
-        const { stdout } = await execa(YTDLP_BIN, args, {
+        const { stdout } = await execFileAsync(YTDLP_BIN, args, {
           timeout: 30000,
-          reject: false,
         });
         return stdout || null;
       } catch (err) {
@@ -200,7 +202,7 @@ export default async function (
 
     async getStreamUrl(url: string): Promise<string | null> {
       try {
-        const { stdout } = await execa(
+        const { stdout } = await execFileAsync(
           YTDLP_BIN,
           [
             "--no-warnings",
@@ -210,7 +212,7 @@ export default async function (
             "bestaudio/best",
             url,
           ],
-          { timeout: 30000, reject: false },
+          { timeout: 30000 },
         );
         return stdout?.trim().split("\n")[0] || null;
       } catch {
